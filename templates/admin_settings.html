@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}اعدادات التطبيق{% endblock %}
+{% block content %}
+<h4>اعدادات التطبيق</h4>
+<form method="post">
+  <div class="mb-3">
+    <label class="form-label">طول كلمة المرور المولدة</label>
+    <input name="password_length" class="form-control" value="{{ password_length }}">
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="sanitize" id="sanitize" {% if sanitize %}checked{% endif %}>
+    <label class="form-check-label" for="sanitize">تفعيل تعقيم HTML (يُنصح به)</label>
+  </div>
+  <div class="d-grid"><button class="btn btn-primary">احفظ</button></div>
+</form>
+{% endblock %}

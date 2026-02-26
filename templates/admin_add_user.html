@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}اضافة مستخدم{% endblock %}
+{% block content %}
+<h4>اضافة مستخدم</h4>
+<form method="post">
+  <div class="mb-3">
+    <label class="form-label">اسم المستخدم</label>
+    <input name="username" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">كلمة المرور (اتركها فارغة للتوليد تلقائياً)</label>
+    <div class="input-group">
+      <input id="password" name="password" class="form-control">
+      <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('password').value = Math.random().toString(36).slice(-8)">توليد</button>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">رقم الصف</label>
+    <input name="grade" type="number" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">دور المستخدم</label>
+    <select name="role" class="form-select">
+      <option value="user">مستخدم</option>
+      <option value="editor">محرر</option>
+      <option value="manager">مدير</option>
+      <option value="admin">ادمن</option>
+    </select>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="is_admin" id="is_admin">
+    <label class="form-check-label" for="is_admin">اجعل هذا المستخدم ادمن</label>
+  </div>
+  <div class="d-grid"><button class="btn btn-primary">احفظ</button></div>
+</form>
+{% endblock %}

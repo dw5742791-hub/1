@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}معاينة{% endblock %}
+{% block content %}
+<h4>معاينة المحتوى</h4>
+<form class="row g-2 mb-3">
+  <div class="col-auto">
+    <select name="grade" class="form-select">
+      <option value="">الصف: الكل</option>
+      {% for g in grades %}
+        <option value="{{ g.grade }}">{{ g.grade }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto">
+    <input name="category" placeholder="فلاتر تصنيف" class="form-control">
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">فلتر</button></div>
+</form>
+<div class="scalable-viewport">
+  <div class="scalable-content">
+    {% for c in contents %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5>{{ c.title }}</h5>
+          <div>{{ c.html|safe }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

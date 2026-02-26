@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}تعديل مستخدم{% endblock %}
+{% block content %}
+<h4>تعديل مستخدم</h4>
+<form method="post">
+  <div class="mb-3">
+    <label class="form-label">اسم المستخدم</label>
+    <input name="username" value="{{ user.username }}" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">كلمة المرور (اتركها إن لم تريد تغييرها)</label>
+    <div class="input-group">
+      <input id="password" name="password" class="form-control">
+      <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('password').value = Math.random().toString(36).slice(-8)">توليد</button>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">رقم الصف</label>
+    <input name="grade" type="number" value="{{ user.grade }}" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">دور المستخدم</label>
+    <select name="role" class="form-select">
+      <option value="user" {% if user.role == 'user' %}selected{% endif %}>مستخدم</option>
+      <option value="editor" {% if user.role == 'editor' %}selected{% endif %}>محرر</option>
+      <option value="manager" {% if user.role == 'manager' %}selected{% endif %}>مدير</option>
+      <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>ادمن</option>
+    </select>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="is_admin" id="is_admin" {% if user.is_admin %}checked{% endif %}>
+    <label class="form-check-label" for="is_admin">اجعل هذا المستخدم ادمن</label>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="starred" id="starred" {% if user.starred %}checked{% endif %}>
+    <label class="form-check-label" for="starred">نجمة (يبان محتويات هذا المستخدم فقط)</label>
+  </div>
+  <div class="d-grid"><button class="btn btn-primary">احفظ</button></div>
+</form>
+{% endblock %}

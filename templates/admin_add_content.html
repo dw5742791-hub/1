@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}اضافة محتوى{% endblock %}
+{% block content %}
+<h4>اضافة محتوى</h4>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label class="form-label">عنوان</label>
+    <input name="title" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">HTML (يمكن وضع كود لعرض المحتوى)</label>
+    <textarea id="htmlEditor" name="html" class="form-control" rows="6"></textarea>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">رفع ملف (اختياري)</label>
+    <input type="file" name="file" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">رابط (اختياري)</label>
+    <input name="link" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">تصنيفات (مفصولة بفاصلة)</label>
+    <input name="categories" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">الصفوف (اختر عدة صفوف أو اتركها فارغة لتظهر للجميع)</label>
+    <div>
+      {% for u in users %}
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="grades" value="{{ u.grade }}" id="g{{ u.grade }}">
+          <label class="form-check-label" for="g{{ u.grade }}">{{ u.grade }}</label>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="d-grid"><button class="btn btn-primary">احفظ</button></div>
+</form>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin" nonce="{{ csp_nonce() }}"></script>
+<script nonce="{{ csp_nonce() }}">
+  tinymce.init({ selector: '#htmlEditor', height: 300, menubar: false, images_upload_url: '/admin/upload_image' });
+</script>
+{% endblock %}

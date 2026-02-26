@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}لوحة الادمن{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3 align-items-center">
+  <h3>لوحة الادمن</h3>
+  <div class="d-flex">
+    <form class="me-2 d-flex" method="get">
+      <input name="q" class="form-control me-2" placeholder="بحث..." value="{{ request.args.get('q','') }}">
+      <input name="category" class="form-control me-2" placeholder="تصنيف" value="{{ request.args.get('category','') }}">
+      <input name="grade" class="form-control me-2" placeholder="صف" value="{{ request.args.get('grade','') }}">
+      <input name="author" class="form-control me-2" placeholder="مؤلف (id)" value="{{ request.args.get('author','') }}">
+      <select name="starred" class="form-select me-2">
+        <option value="">الكل</option>
+        <option value="1" {% if request.args.get('starred')=='1' %}selected{% endif %}>مميزين فقط</option>
+      </select>
+      <button class="btn btn-outline-light">فلتر</button>
+    </form>
+    <a class="btn btn-success me-2" href="{{ url_for('admin_add_user') }}">اضافة مستخدم</a>
+    <a class="btn btn-primary me-2" href="{{ url_for('admin_add_content') }}">اضافة محتوى</a>
+    <a class="btn btn-secondary me-2" href="{{ url_for('admin_preview') }}">معاينة</a>
+    <a class="btn btn-outline-primary me-2" href="{{ url_for('admin_import_contents') }}">استيراد JSON</a>
+    <a class="btn btn-outline-dark me-2" href="{{ url_for('admin_export_contents_json') }}">تصدير JSON</a>
+    <a class="btn btn-outline-info me-2" href="{{ url_for('admin_audit') }}">سجلات النشاط</a>
+    <a class="btn btn-warning" href="{{ url_for('admin_settings') }}">الاعدادات</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    <h5>المستخدمين</h5>
+    <table class="table table-sm">
+      <thead><tr><th>#</th><th>اسم</th><th>صف</th><th>نجمة</th><th></th></tr></thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.grade }}</td>
+          <td>{% if u.starred %}★{% endif %}</td>
+          <td><a href="{{ url_for('admin_edit_user', user_id=u.id) }}">تعديل</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-7">
+    <h5>المحتويات</h5>
+    <table class="table table-sm">
+      <thead><tr><th>#</th><th>عنوان</th><th>صفوف</th><th>تصنيفات</th><th></th></tr></thead>
+      <tbody>
+        {% for c in contents %}
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.title or 'بدون عنوان' }}</td>
+          <td>{{ c.grades }}</td>
+          <td>{{ c.categories }}</td>
+          <td><a href="{{ url_for('admin_edit_content', cid=c.id) }}">تعديل</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

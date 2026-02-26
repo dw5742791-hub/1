@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}استيراد محتوى{% endblock %}
+{% block content %}
+<h4>استيراد محتوى من JSON</h4>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label class="form-label">ملف JSON</label>
+    <input type="file" name="jsonfile" class="form-control" accept=".json" required>
+  </div>
+  <div class="alert alert-info">يتم التحقق من البيانات (تعقيم HTML). المحتوى الموجود لن يُستبدل.</div>
+  <div class="d-grid"><button class="btn btn-primary">استيراد</button></div>
+</form>
+{% endblock %}
+

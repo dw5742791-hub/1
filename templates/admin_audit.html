@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}سجلات النشاط{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h4>سجلات النشاط</h4>
+  <div>
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin_export_csv') }}">تصدير CSV</a>
+  </div>
+</div>
+<table class="table table-sm">
+  <thead><tr><th>الوقت</th><th>مستخدم</th><th>فعل</th></tr></thead>
+  <tbody>
+    {% for l in logs %}
+      <tr>
+        <td>{{ l.ts }}</td>
+        <td>{{ l.user_id }}</td>
+        <td>{{ l.action }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

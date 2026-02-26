@@ -1,0 +1,23 @@
+body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; }
+.navbar-brand { font-weight: 600; }
+.card { box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.content-item { transition: box-shadow .15s ease; }
+.content-item:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.me-2 { margin-left: .5rem !important; }
+
+/* Scalable content container to fit screen while preserving aspect ratio */
+.scalable-viewport {
+	width: 100%;
+	height: calc(100vh - 120px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+.scalable-content {
+	/* base design size - change as needed */
+	width: 1200px;
+	height: 800px;
+	transform-origin: top left;
+}
+
