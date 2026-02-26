@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>README_NEW</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>body{padding:2rem;}</style>
+</head>
+<body>
+<div class="container">
+<h1>نظام إدارة المحتوى (Content Management System)</h1>
+<p>A comprehensive Arabic-localized CMS built with Flask, featuring admin dashboard, user management, content editing, and advanced security features.</p>
+<h2>Installation &amp; Setup</h2>
+<pre><code class="language-bash"># Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python app.py
+</code></pre>
+<blockquote>
+<p><strong>ملاحظة حول GitHub Pages:</strong> هذا المستودع يحتوي على تطبيق Flask كامل يعمل بالخلفية. GitHub Pages يدعم فقط الملفات الثابتة (HTML/CSS/JS) ولا يمكنه تشغيل بايثون أو خادم Flask. لذلك لا يمكنك نشر التطبيق نفسه مباشرةً على Pages. إذا أردت مشاركة التطبيق:</p>
+<ol>
+<li>استخدم أي من طرق الاستضافة التي في <code>START_HERE_PUBLIC.md</code> (مثل ngrok أو Replit أو Railway).  </li>
+<li>أو استنسخ المشروع محلياً وشغّله بكتابة <code>python app.py</code> ثم افتح http://localhost:5000.</li>
+</ol>
+<p>ملف <code>index.html</code> الموجود بالجذر هو صفحة ثابتة بسيطة توضّح هذه النقطة وتوجه الزوار إلى الوثائق.</p>
+</blockquote>
+<p>The app will start at <code>http://localhost:5000</code></p>
+<h2>Default Admin Credentials</h2>
+<ul>
+<li><strong>Username:</strong> <code>228820</code></li>
+<li><strong>Password:</strong> <code>228820</code></li>
+</ul>
+<h2>Features</h2>
+<h3>1. <strong>User Authentication &amp; Authorization</strong></h3>
+<ul>
+<li>Login system with session management</li>
+<li>Admin and user role distinction</li>
+<li>User role management (user/editor/manager/admin)</li>
+<li>Password hashing with Werkzeug security</li>
+</ul>
+<h3>2. <strong>Admin Dashboard</strong> (<code>/admin</code>)</h3>
+<ul>
+<li>User management (add, edit, delete users)</li>
+<li>Content management (add, edit, preview content)</li>
+<li>Advanced filtering by:<ul>
+<li>Search term (username, title)</li>
+<li>Grade level</li>
+<li>Category</li>
+<li>Author ID</li>
+<li>Starred users</li>
+</ul>
+</li>
+<li>Pagination (20 items per page)</li>
+<li>Quick admin action buttons</li>
+</ul>
+<h3>3. <strong>User Management</strong></h3>
+<ul>
+<li>Add new users with auto-generated passwords (configurable length)</li>
+<li>Edit user profiles (username, grade, role, admin flag)</li>
+<li>Mark users as &ldquo;starred&rdquo; (featured for quick content access)</li>
+<li>Password generation using secure random tokens</li>
+</ul>
+<h3>4. <strong>Content Management</strong></h3>
+<ul>
+<li>WYSIWYG editor (TinyMCE 6) for rich HTML editing</li>
+<li>Content categorization with comma-separated tags</li>
+<li>Grade-level targeting (control visibility by student grade)</li>
+<li>File uploads (images: PNG, JPG, JPEG, GIF, WebP; 4MB max)</li>
+<li>Secure filename handling (SHA256 hash-based naming)</li>
+<li>HTML sanitization via <code>bleach</code> (prevents XSS while preserving formatting)</li>
+</ul>
+<h3>5. <strong>User Dashboard</strong> (<code>/user</code>)</h3>
+<ul>
+<li>Grade-based content filtering (shows only content meant for user&rsquo;s grade)</li>
+<li>Category sidebar for browsing by topic</li>
+<li>Responsive card-based layout</li>
+<li>Fit-to-screen scaling (aspect ratio preserved on all devices)</li>
+</ul>
+<h3>6. <strong>Security Features</strong></h3>
+<ul>
+<li><strong>CSRF Protection:</strong> All forms protected with Flask-WTF tokens</li>
+<li><strong>Content Security Policy (CSP):</strong> Per-request nonce for inline scripts</li>
+<li><strong>HTML Sanitization:</strong> Bleach allowlist filtering (safe tags/attrs only)</li>
+<li><strong>Secure File Uploads:</strong> Hash-based filenames, MIME validation, 4MB limit</li>
+<li><strong>X-Frame-Options:</strong> DENY (prevent clickjacking)</li>
+<li><strong>X-Content-Type-Options:</strong> nosniff (prevent MIME sniffing)</li>
+</ul>
+<h3>7. <strong>Audit Logging</strong></h3>
+<ul>
+<li>Track all admin actions (add user, edit content, etc.)</li>
+<li>Audit log viewer at <code>/admin/audit</code></li>
+<li>CSV export of logs for record keeping</li>
+</ul>
+<h3>8. <strong>Settings Management</strong> (<code>/admin/settings</code>)</h3>
+<ul>
+<li>Configure password generation length</li>
+<li>Enable/disable HTML sanitization</li>
+<li>Persistent settings stored in database</li>
+</ul>
+<h3>9. <strong>Admin Preview</strong> (<code>/admin/preview</code>)</h3>
+<ul>
+<li>View content as users would see it</li>
+<li>Test grade filtering</li>
+<li>Test category filtering</li>
+</ul>
+<h3>10. <strong>JSON Import/Export</strong></h3>
+<ul>
+<li><strong>Export:</strong> <code>/admin/contents/export/json</code> – Download all contents as JSON</li>
+<li><strong>Import:</strong> <code>/admin/contents/import</code> – Bulk upload JSON file</li>
+<li>Smart duplicate detection (skips by ID if exists)</li>
+<li>HTML sanitization on import</li>
+</ul>
+<h2>API Endpoints</h2>
+<h3>Authentication</h3>
+<ul>
+<li><code>POST /login</code> – User login</li>
+<li><code>GET /logout</code> – User logout</li>
+</ul>
+<h3>Admin Routes</h3>
+<ul>
+<li><code>GET /admin</code> – Admin dashboard</li>
+<li><code>POST /admin/users/add</code> – Create new user</li>
+<li><code>GET/POST /admin/users/edit/&lt;user_id&gt;</code> – Edit user</li>
+<li><code>GET/POST /admin/contents/add</code> – Create content</li>
+<li><code>GET/POST /admin/contents/edit/&lt;content_id&gt;</code> – Edit content</li>
+<li><code>GET /admin/preview</code> – Preview all content</li>
+<li><code>GET /admin/audit</code> – View audit logs</li>
+<li><code>GET /admin/export/csv</code> – Export logs as CSV</li>
+<li><code>GET/POST /admin/settings</code> – Manage settings</li>
+<li><code>GET/POST /admin/contents/import</code> – Import JSON</li>
+<li><code>GET /admin/contents/export/json</code> – Export contents as JSON</li>
+<li><code>POST /admin/upload_image</code> – TinyMCE image upload</li>
+</ul>
+<h3>User Routes</h3>
+<ul>
+<li><code>GET /user</code> – User dashboard</li>
+<li><code>GET /uploads/&lt;filename&gt;</code> – Serve uploaded files</li>
+</ul>
+<h2>Database Schema</h2>
+<h3>Users Table</h3>
+<pre><code>id (INTEGER, PK)
+username (TEXT, UNIQUE)
+password_hash (TEXT)
+grade (INTEGER) – Student grade level
+is_admin (INTEGER) – Admin flag (0/1)
+role (TEXT) – Role type (user/editor/manager/admin)
+starred (INTEGER) – Mark as featured (0/1)
+</code></pre>
+<h3>Contents Table</h3>
+<pre><code>id (INTEGER, PK)
+title (TEXT)
+html (TEXT) – Sanitized HTML content
+link (TEXT) – External link or upload URL
+categories (TEXT) – Comma-separated tags
+grades (TEXT) – Comma-separated grade numbers
+author_id (INTEGER, FK → users.id)
+</code></pre>
+<h3>Audit Logs Table</h3>
+<pre><code>id (INTEGER, PK)
+ts (DATETIME) – Timestamp
+user_id (INTEGER, FK → users.id)
+action (TEXT) – Description of action
+</code></pre>
+<h3>Settings Table</h3>
+<pre><code>key (TEXT, PK) – Setting name
+value (TEXT) – Setting value
+</code></pre>
+<h2>File Uploads</h2>
+<p>Uploaded files are stored in <code>static/uploads/</code> with secure hash-based filenames:
+- Only image files allowed: PNG, JPG, JPEG, GIF, WebP
+- Max file size: 4 MB
+- Filename: <code>&lt;SHA256_hash_first_16_chars&gt;.&lt;ext&gt;</code>
+- Example: <code>/static/uploads/a1b2c3d4e5f6g7h8.jpg</code></p>
+<h2>JSON Import/Export Format</h2>
+<h3>Export Format</h3>
+<pre><code class="language-json">[
+  {
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;محتوى العلوم&quot;,
+    &quot;html&quot;: &quot;&lt;p&gt;نص محتوى مُعقّم&lt;/p&gt;&quot;,
+    &quot;link&quot;: &quot;/static/uploads/hash.jpg&quot;,
+    &quot;categories&quot;: &quot;علوم,طبيعة&quot;,
+    &quot;grades&quot;: &quot;5,6&quot;,
+    &quot;author_id&quot;: 1
+  }
+]
+</code></pre>
+<h3>Import Notes</h3>
+<ul>
+<li>File must be valid JSON (<code>.json</code> extension)</li>
+<li>Duplicates detected by <code>id</code> field (skipped if exists)</li>
+<li>HTML content automatically sanitized on import</li>
+<li>New content assigned to importing admin user as author</li>
+</ul>
+<h2>Responsive Design Features</h2>
+<ul>
+<li><strong>Bootstrap 5.3.2</strong> for responsive grid/components</li>
+<li><strong>RTL (Right-to-Left)</strong> HTML support for Arabic text</li>
+<li><strong>Fit-to-Screen Scaling</strong> (<code>fit.js</code>): Automatically scales content to fit viewport while preserving aspect ratio</li>
+<li>Mobile-friendly forms and navigation</li>
+</ul>
+<h2>Content Security Policy</h2>
+<p>The app enforces a strict CSP header:</p>
+<pre><code>default-src 'self' https:;
+script-src 'self' 'nonce-{REQUEST_NONCE}' https://cdn.tiny.cloud;
+style-src 'self' 'nonce-{REQUEST_NONCE}' https:;
+</code></pre>
+<p>Each request generates a unique nonce for inline scripts/styles. External resources (TinyMCE, Bootstrap CDN) are explicitly whitelisted.</p>
+<h2>HTML Sanitization Allowlist</h2>
+<p><strong>Allowed Tags:</strong> <code>p</code>, <code>b</code>, <code>i</code>, <code>u</code>, <code>a</code>, <code>img</code>, <code>ul</code>, <code>ol</code>, <code>li</code>, <code>br</code>, <code>strong</code>, <code>em</code>, <code>h1-h4</code>, <code>iframe</code>, <code>div</code>, <code>span</code></p>
+<p><strong>Allowed Attributes:</strong>
+- Links: <code>href</code>, <code>target</code>, <code>rel</code>
+- Images: <code>src</code>, <code>alt</code>, <code>style</code>
+- Iframes: <code>src</code>, <code>width</code>, <code>height</code>, <code>frameborder</code>, <code>allow</code>, <code>allowfullscreen</code>
+- All elements: <code>style</code>, <code>class</code></p>
+<h2>Development Notes</h2>
+<ul>
+<li>Uses SQLite for simplicity (easily upgradeable to PostgreSQL)</li>
+<li>Decorators: <code>@login_required</code>, <code>@admin_required</code> for route protection</li>
+<li>Context processor injects <code>csrf_token()</code> and <code>csp_nonce()</code> into templates</li>
+<li>All timestamps in audit logs use server time (CURRENT_TIMESTAMP)</li>
+<li>Password hashing uses Werkzeug&rsquo;s <code>generate_password_hash</code> (pbkdf2:sha256)</li>
+</ul>
+<h2>Troubleshooting</h2>
+<p><strong>Forgot admin password?</strong>
+- Delete <code>data.db</code> and restart the app (default admin will be recreated)</p>
+<p><strong>Uploads not working?</strong>
+- Ensure <code>static/uploads/</code> directory exists (created automatically)
+- Check file size (max 4MB) and format (PNG, JPG, JPEG, GIF, WebP)</p>
+<p><strong>CSP errors in browser console?</strong>
+- Nonce is generated per-request; scripts should have matching <code>nonce</code> attribute
+- External scripts must be whitelisted in <code>@app.after_request</code></p>
+<h2>License</h2>
+<p>Open source for educational use.</p>
+</div>
+</body>
+</html>
