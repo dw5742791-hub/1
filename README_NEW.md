@@ -15,6 +15,12 @@ pip install -r requirements.txt
 # Run the application
 python app.py
 ```
+> **ملاحظة حول GitHub Pages:** هذا المستودع يحتوي على تطبيق Flask كامل يعمل بالخلفية. GitHub Pages يدعم فقط الملفات الثابتة (HTML/CSS/JS) ولا يمكنه تشغيل بايثون أو خادم Flask. لذلك لا يمكنك نشر التطبيق نفسه مباشرةً على Pages. إذا أردت مشاركة التطبيق:
+>
+> 1. استخدم أي من طرق الاستضافة التي في `START_HERE_PUBLIC.md` (مثل ngrok أو Replit أو Railway).  
+> 2. أو استنسخ المشروع محلياً وشغّله بكتابة `python app.py` ثم افتح http://localhost:5000.
+>  
+> ملف `index.html` الموجود بالجذر هو صفحة ثابتة بسيطة توضّح هذه النقطة وتوجه الزوار إلى الوثائق.
 
 The app will start at `http://localhost:5000`
 
