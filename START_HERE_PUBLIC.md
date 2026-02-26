@@ -168,6 +168,39 @@ railway login
 railway up
 ```
 
+> **نشر تلقائي عبر GitHub Actions**
+> يمكنك إعداد Workflow بسيط في `.github/workflows/deploy.yml` لنشر التطبيق آلياً عند كل دفعة إلى `main`.
+> مثال للنشر إلى Heroku:
+> ```yaml
+> name: Deploy to Heroku
+> on:
+>   push:
+>     branches: [ main ]
+>
+> jobs:
+>   build-and-deploy:
+>     runs-on: ubuntu-latest
+>     steps:
+>       - uses: actions/checkout@v3
+>       - name: Set up Python
+>         uses: actions/setup-python@v4
+>         with:
+>           python-version: '3.11'
+>       - name: Install dependencies
+>         run: |
+>           python -m pip install --upgrade pip
+>           pip install -r requirements.txt
+>       - name: Deploy to Heroku
+>         uses: akhileshns/heroku-deploy@v3.12.12
+>         with:
+>           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+>           heroku_app_name: "your-heroku-app-name"
+>           heroku_email: "you@example.com"
+> ```
+> ضع متغيرات السرية (`HEROKU_API_KEY` وغيرها) في إعدادات المستودع.
+> يمكن استبدال خطوة النشر بإجراءات مماثلة لمنصة Railway أو غيرها.
+
+
 ---
 
 ## 📧 Share Your Link
